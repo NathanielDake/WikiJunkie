@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users, controllers: { sessions: 'users/sessions' }
   #This code create HTTP GET routes for the index and about views
 
   get 'welcome/index'

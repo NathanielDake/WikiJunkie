@@ -61,3 +61,6 @@ end
 
 gem 'figaro'
 gem 'bootstrap-sass'
+gem 'devise'
+gem 'table_print'
+
