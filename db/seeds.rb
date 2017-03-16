@@ -6,12 +6,23 @@ require 'random_data'
       password: RandomData.random_sentence
   )
 end
+
 User.create!(
       email: 'ndake11@gmail.com',
       password: 'password',
       password_confirmation: 'password',
+      confirmed_at: Time.at(0),
+      role: 'admin'
+)
+
+User.create!(
+      email: 'standard@gmail.com',
+      password: 'password',
+      password_confirmation: 'password',
       confirmed_at: Time.at(0)
 )
+
+
 
 users = User.all
 
