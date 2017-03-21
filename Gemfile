@@ -65,4 +65,5 @@ gem 'devise'
 gem 'table_print'
 gem 'pundit'
 gem 'stripe'
+gem 'redcarpet', '~> 3.0.0'
 
