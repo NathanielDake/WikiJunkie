@@ -16,14 +16,15 @@ User.create!(
 )
 
 User.create!(
-      email: 'standard1@gmail.com',
+      email: 'premium@gmail.com',
       password: 'password',
       password_confirmation: 'password',
-      confirmed_at: Time.at(0)
+      confirmed_at: Time.at(0),
+      role: 'premium'
 )
 
 User.create!(
-    email: 'standard2@gmail.com',
+    email: 'standard@gmail.com',
     password: 'password',
     password_confirmation: 'password',
     confirmed_at: Time.at(0)

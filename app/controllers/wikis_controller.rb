@@ -13,6 +13,7 @@ class WikisController < ApplicationController
 
   def new
     @wiki = Wiki.new
+    @collaborations = User.all - [current_user]
   end
 
   def create
@@ -22,7 +23,9 @@ class WikisController < ApplicationController
     @wiki.body = params[:wiki][:body]
     @wiki.private = params[:wiki][:private]
 
+
     if @wiki.save
+      new_collaboration
       flash[:notice] = "Your new Wiki has been created."
       redirect_to @wiki
     else
@@ -33,6 +36,7 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
+    @collaborations = User.all - [@wiki.user]
   end
 
   def update
@@ -42,6 +46,7 @@ class WikisController < ApplicationController
     @wiki.private = params[:wiki][:private]
 
     if @wiki.save
+      edit_collaboration
       flash[:notice] = "Your wiki has been updated."
       redirect_to @wiki
     else
@@ -70,4 +75,28 @@ class WikisController < ApplicationController
       redirect_to wikis_path
     end
   end
+
+  def new_collaboration
+    params[:wiki][:user_ids].each do |user_id|
+      collaboration = Collaboration.new
+      collaboration.user_id = user_id
+      collaboration.wiki_id = Wiki.count
+      collaboration.save
+    end
+  end
+
+  def edit_collaboration
+    Collaboration.where(wiki_id: @wiki).each do |collaboration|
+      collaboration.destroy
+    end
+    params[:wiki][:user_ids].each do |user_id|
+      collaboration = Collaboration.new
+      collaboration.user_id = user_id
+      collaboration.wiki_id = Wiki.count
+      collaboration.save
+    end
+
+  end
+
+
 end

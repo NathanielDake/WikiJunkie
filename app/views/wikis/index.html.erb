@@ -1,17 +1,15 @@
-
 <div class="col-md-6">
 <h1>All Wikis</h1>
-
 <% @wikis.each do |wiki| %>
-    <div class="media">
-      <div class="media-body">
-        <h4 class="media-heading">
-          <% if user_authorized_to_view_wiki?(wiki) %>
-            <p><%= link_to wiki.title, wiki %></p>
-          <% end %>
-        </h4>
+      <% if user_authorized_to_view_wiki?(wiki) %>
+      <div class="media">
+        <div class="media-body">
+          <h4 class="media-heading">
+              <p><%= link_to wiki.title, wiki %></p>
+          </h4>
+        </div>
       </div>
-    </div>
+      <% end %>
 <% end %>
 </div>
 <div class="col-md-6">
