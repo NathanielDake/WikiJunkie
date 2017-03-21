@@ -3,6 +3,7 @@ include Amount
 
 def down_grade_to_standard
   if current_user.update(role: "standard")
+    current_user.set_wikis_public
     flash[:notice] = " You have downgraded your account to standard, #{current_user.email}!"
     redirect_to root_path
   else
@@ -25,7 +26,7 @@ end
     )
 
     charge = Stripe::Charge.create(
-        customer: customer.id, # Note -- this is NOT the user_id in your app
+        customer: customer.id,
         amount: default_amount,
         description: "BigMoney Membership - #{current_user.email}",
         currency: 'usd'
@@ -43,5 +44,7 @@ end
   rescue Stripe::CardError => e
     flash[:alert] = e.message
     redirect_to new_charge_path
+
+
 
 end

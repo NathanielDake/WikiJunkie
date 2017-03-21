@@ -6,7 +6,9 @@
     <div class="media">
       <div class="media-body">
         <h4 class="media-heading">
-          <p><%= link_to wiki.title, wiki %></p>
+          <% if user_authorized_to_view_wiki?(wiki) %>
+            <p><%= link_to wiki.title, wiki %></p>
+          <% end %>
         </h4>
       </div>
     </div>

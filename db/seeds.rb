@@ -16,10 +16,17 @@ User.create!(
 )
 
 User.create!(
-      email: 'standard@gmail.com',
+      email: 'standard1@gmail.com',
       password: 'password',
       password_confirmation: 'password',
       confirmed_at: Time.at(0)
+)
+
+User.create!(
+    email: 'standard2@gmail.com',
+    password: 'password',
+    password_confirmation: 'password',
+    confirmed_at: Time.at(0)
 )
 
 users = User.all
