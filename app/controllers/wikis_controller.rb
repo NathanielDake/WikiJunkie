@@ -1,5 +1,5 @@
 class WikisController < ApplicationController
-
+include WikisHelper
 
   before_action :authorize_user, except: [:index, :show]
 
@@ -17,13 +17,7 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = Wiki.new
-    @wiki.user = current_user
-    @wiki.title = params[:wiki][:title]
-    @wiki.body = params[:wiki][:body]
-    @wiki.private = params[:wiki][:private]
-
-
+    create_wiki
     if @wiki.save
       new_collaboration
       flash[:notice] = "Your new Wiki has been created."
@@ -40,11 +34,7 @@ class WikisController < ApplicationController
   end
 
   def update
-    @wiki = Wiki.find(params[:id])
-    @wiki.title = params[:wiki][:title]
-    @wiki.body = params[:wiki][:body]
-    @wiki.private = params[:wiki][:private]
-
+    update_wiki
     if @wiki.save
       edit_collaboration
       flash[:notice] = "Your wiki has been updated."
@@ -57,7 +47,6 @@ class WikisController < ApplicationController
 
   def destroy
     @wiki = Wiki.find(params[:id])
-
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
       redirect_to wikis_path
@@ -68,35 +57,11 @@ class WikisController < ApplicationController
   end
 
   private
-
   def authorize_user
     unless current_user
       flash[:alert] = "You must be signed in to do that."
       redirect_to wikis_path
     end
   end
-
-  def new_collaboration
-    params[:wiki][:user_ids].each do |user_id|
-      collaboration = Collaboration.new
-      collaboration.user_id = user_id
-      collaboration.wiki_id = Wiki.count
-      collaboration.save
-    end
-  end
-
-  def edit_collaboration
-    Collaboration.where(wiki_id: @wiki).each do |collaboration|
-      collaboration.destroy
-    end
-    params[:wiki][:user_ids].each do |user_id|
-      collaboration = Collaboration.new
-      collaboration.user_id = user_id
-      collaboration.wiki_id = Wiki.count
-      collaboration.save
-    end
-
-  end
-
 
 end
