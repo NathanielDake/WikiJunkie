@@ -1,27 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Blocipedia</title>
+  <title>WikiJunkie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<div id="header-row">
   <div class="container">
-    <ul class="nav nav-tabs">
-      <li><%= link_to "Home", welcome_index_path %></li>
-      <li><%= link_to "Wikis", wikis_path %></li>
-      <div class="pull-right sign-in-align">
-            <% if user_signed_in? %>
-                Signed in as: <strong><%= current_user.email %></strong> |
-                <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> - <%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-            <% else %>
-                <%= link_to "Sign Up", new_user_registration_path, :class => 'navbar-link'  %> -
-                <%= link_to "Sign In", new_user_session_path, :class => 'navbar-link'  %>
-            <% end %>
+    <div class="row">
+      <!--LOGO-->
+
+     <h1 class="pull-left display-1">WikiJunkie</h1>
+      <!-- /LOGO -->
+
+      <!-- MAIN NAVIGATION -->
+      <div class="span9 inline">
+        <div class="navbar  pull-right">
+          <div class="navbar-inner">
+            <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a>
+            <div class="nav-collapse collapse navbar-responsive-collapse">
+              <ul class="nav">
+                <li><%= link_to "WikiJunkie", root_path %><li>
+                <li><%= link_to "Wikis", wikis_path %></li>
+
+                <% if user_signed_in? %>
+                    <li><%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> </li>
+                     <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
+                <% else %>
+                    <li><%= link_to "Sign Up", new_user_registration_path, :class => 'navbar-link'  %> </li>
+                   <li> <%= link_to "Sign In", new_user_session_path, :class => 'navbar-link'  %></li>
+
+                <% end %>
+
+              </ul>
+            </div>
+
+          </div>
+        </div>
       </div>
-    </ul>
+      <!-- MAIN NAVIGATION -->
+    </div>
+  </div>
+</div>
+
+<div class="container margin-bottom-100">
+
+
+
+
     <% if flash[:notice] %>
         <div class="alert alert-success">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -38,7 +68,15 @@
           <%= flash[:alert] %>
         </div>
     <% end %>
+
+
+
+
     <%= yield %>
+
+
+
+
   </div>
 </body>
 </html>
